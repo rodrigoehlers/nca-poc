@@ -10,14 +10,14 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:nca-poc.helloWorld"
+    "onCommand:nca-poc.openAssignmentView"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "nca-poc.helloWorld",
-        "title": "Hello World"
+        "command": "nca-poc.openAssignmentView",
+        "title": "Open File in Assignment View"
       }
     ]
   },
