@@ -1,10 +1,10 @@
 import * as vscode from 'vscode';
-import handleOpenAssignmentView from './commands/handleOpenAssignmentView';
+import handleOpenAssignmentViewFactory from './commands/handleOpenAssignmentView';
 
 export function activate(context: vscode.ExtensionContext) {
   const openAssignmentViewDisposable = vscode.commands.registerCommand(
     'nca-poc.openAssignmentView',
-    handleOpenAssignmentView
+    handleOpenAssignmentViewFactory(context)
   );
   context.subscriptions.push(openAssignmentViewDisposable);
 }

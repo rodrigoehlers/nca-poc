@@ -5,7 +5,7 @@ import { getAssignmentFromJSON } from '../serialization';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-const handleOpenAssignmentView = () => {
+const handleOpenAssignmentView = (context: vscode.ExtensionContext) => {
   const { activeTextEditor } = vscode.window;
 
   if (!activeTextEditor) {
@@ -44,6 +44,14 @@ window.__vite_plugin_react_preamble_installed__ = true;
         const withPreambleFix = withLocalhost.replace('<div id="root"></div>', preambleFix);
 
         panel.webview.html = withPreambleFix;
+        panel.webview.postMessage(assignment);
+        panel.webview.onDidReceiveMessage(
+          (message) => {
+            console.log(message);
+          },
+          undefined,
+          context.subscriptions
+        );
       } else {
       }
     } catch (error) {
@@ -52,4 +60,6 @@ window.__vite_plugin_react_preamble_installed__ = true;
   }
 };
 
-export default handleOpenAssignmentView;
+const handleOpenAssignmentViewFactory = (context: vscode.ExtensionContext) => () => handleOpenAssignmentView(context);
+
+export default handleOpenAssignmentViewFactory;

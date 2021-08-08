@@ -5,6 +5,12 @@ declare namespace NCA {
     tasks: Task[];
   }
 
+  enum TaskType {
+    TEXT = 'text',
+    SINGLE_CHOICE = 'single-choice',
+    MULTIPLE_CHOICE = 'multiple-choice',
+  }
+
   interface Task {
     id: string;
     title: string;
@@ -32,12 +38,22 @@ declare namespace NCA {
   interface Option {
     id: string;
     label: string;
+  }
+
+  interface AssignmentResponse {
+    id: string;
+    tasks: TaskResponse[];
+  }
+
+  interface TaskResponse {
+    id: string;
+  }
+
+  interface TextTaskResponse extends TaskResponse {
     value: string;
   }
 
-  enum TaskType {
-    TEXT = 'text',
-    SINGLE_CHOICE = 'single-choice',
-    MULTIPLE_CHOICE = 'multiple-choice',
+  interface ChoiceTaskResponse extends TaskResponse {
+    values: string[];
   }
 }

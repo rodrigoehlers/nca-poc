@@ -3,7 +3,7 @@
     "module": "commonjs",
     "target": "es6",
     "outDir": "out",
-    "lib": ["es6", "dom"],
+    "lib": ["es6", "dom", "dom.iterable"],
     "sourceMap": true,
     "rootDir": ".",
     "strict": true,
@@ -11,6 +11,6 @@
     "esModuleInterop": true,
     "jsx": "preserve",
   },
-  "include": ["./**/*.tsx", "../types.d.ts"],
+  "include": ["./**/*.tsx", "../types/**/*.d.ts"],
   "exclude": ["node_modules", ".vscode-test"]
 }
