@@ -1,4 +1,5 @@
 import React from 'react';
+import { NCA } from '@/types/nca';
 import Option from './Option';
 
 export interface MultipleChoiceTaskBodyProps {

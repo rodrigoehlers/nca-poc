@@ -1,4 +1,5 @@
 import React from 'react';
+import { NCA } from '@/types/nca';
 
 export interface OptionProps {
   taskId: string;
@@ -20,10 +21,3 @@ const Option: React.FC<OptionProps> = (props) => {
 };
 
 export default Option;
-
-/*
-
-<button id={option.id} onClick={onClick}>
-      {option.label}
-    </button>
-*/

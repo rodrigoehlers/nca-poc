@@ -5,12 +5,16 @@
     "outDir": "out",
     "lib": ["es6", "dom", "dom.iterable"],
     "sourceMap": true,
-    "rootDir": ".",
+    "rootDir": "../",
     "strict": true,
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "preserve",
+    "paths": {
+      "@/types" : ["../types"],
+      "@/types/*": ["../types/*"]
+    }
   },
-  "include": ["./**/*.tsx", "../types/**/*.d.ts"],
+  "include": ["./**/*.tsx"],
   "exclude": ["node_modules", ".vscode-test"]
 }

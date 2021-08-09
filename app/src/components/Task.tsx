@@ -1,4 +1,5 @@
 import React from 'react';
+import { NCA } from '@/types/nca';
 import TextTaskBody from './TextTaskBody';
 import SingleChoiceTaskBody from './SingleChoiceTaskBody';
 import MultipleChoiceTaskBody from './MultipleChoiceTaskBody';

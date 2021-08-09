@@ -1,59 +1,59 @@
-declare namespace NCA {
-  interface Assignment {
+export namespace NCA {
+  export interface Assignment {
     id: string;
     title: string;
     tasks: Task[];
   }
 
-  enum TaskType {
+  export enum TaskType {
     TEXT = 'text',
     SINGLE_CHOICE = 'single-choice',
     MULTIPLE_CHOICE = 'multiple-choice',
   }
 
-  interface Task {
+  export interface Task {
     id: string;
     title: string;
     desc?: string;
     type: TaskType;
   }
 
-  interface TextTask extends Task {
+  export interface TextTask extends Task {
     type: TaskType.TEXT;
     desc: string;
   }
 
-  interface ChoiceTask extends Task {
+  export interface ChoiceTask extends Task {
     options: Option[];
   }
 
-  interface SingleChoiceTask extends ChoiceTask {
+  export interface SingleChoiceTask extends ChoiceTask {
     type: TaskType.SINGLE_CHOICE;
   }
 
-  interface MultipleChoiceTask extends ChoiceTask {
+  export interface MultipleChoiceTask extends ChoiceTask {
     type: TaskType.MULTIPLE_CHOICE;
   }
 
-  interface Option {
+  export interface Option {
     id: string;
     label: string;
   }
 
-  interface AssignmentResponse {
+  export interface AssignmentResponse {
     id: string;
     tasks: TaskResponse[];
   }
 
-  interface TaskResponse {
+  export interface TaskResponse {
     id: string;
   }
 
-  interface TextTaskResponse extends TaskResponse {
+  export interface TextTaskResponse extends TaskResponse {
     value: string;
   }
 
-  interface ChoiceTaskResponse extends TaskResponse {
+  export interface ChoiceTaskResponse extends TaskResponse {
     values: string[];
   }
 }
