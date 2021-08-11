@@ -1,4 +1,4 @@
-import { NCA } from '@/types/nca';
+import { NCA } from '../types/nca';
 
 export const getAssignmentFromJSON = (json: string): NCA.Assignment => {
   // TODO: Validation and error handling.
