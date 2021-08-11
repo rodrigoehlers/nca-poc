@@ -10,8 +10,6 @@ export interface OptionProps {
 const Option: React.FC<OptionProps> = (props) => {
   const { taskId, type = 'radio', option } = props;
 
-  console.log(type);
-
   return (
     <div>
       <input type={type} id={`${taskId}-${option.id}`} name={taskId} value={option.id} />

@@ -1,18 +1,23 @@
-import React, { EventHandler, FormEventHandler, useEffect, useRef } from 'react';
+import React, { FormEventHandler } from 'react';
+import { NCA } from '@/types/nca';
 import Task from './Task';
+import { LinkMessage, LinkMessageType } from '@/types/link';
 
 export interface AssignmentProps {
+  vscode: any;
   assignment: NCA.Assignment;
 }
 
-const vscode = acquireVsCodeApi();
-
 const Assignment: React.FC<AssignmentProps> = (props) => {
-  const { assignment } = props;
+  const { vscode, assignment } = props;
 
   const handleSendResponseToExtension = (response: NCA.AssignmentResponse) => {
-    console.log(JSON.stringify(response, null, 2));
-    vscode.postMessage(response);
+    const message: LinkMessage = {
+      type: LinkMessageType.POST_RESPONSE,
+      payload: response,
+    };
+
+    vscode.postMessage(message);
   };
 
   const handleBuildResponseFromFormData = (data: FormData) => {
@@ -46,13 +51,15 @@ const Assignment: React.FC<AssignmentProps> = (props) => {
   const handleRenderTask = (task: NCA.Task) => <Task key={task.id} task={task} />;
 
   return (
-    <div>
+    <>
       <h1>{assignment.title}</h1>
       <form onSubmit={handleSubmit}>
         {assignment.tasks.map(handleRenderTask)}
-        <button type="submit">Submit</button>
+        <div className="submit-container">
+          <button type="submit">Submit</button>
+        </div>
       </form>
-    </div>
+    </>
   );
 };
 
