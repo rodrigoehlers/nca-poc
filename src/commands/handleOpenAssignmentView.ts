@@ -6,7 +6,7 @@ import { NCA } from '../../types/nca';
 import { getAssignmentFromJSON } from '../serialization';
 import AssignmentService from '../service/AssignmentService';
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.__NCA_POC_ENV === 'production';
 
 const handleGetTextFromActiveEditor = (): [path: string, content: string] | [null, null] => {
   const { activeTextEditor } = vscode.window;
@@ -32,6 +32,15 @@ const handleOpenAssignmentView = (context: vscode.ExtensionContext) => {
 
   try {
     const assignment: NCA.Assignment = getAssignmentFromJSON(content);
+
+    const localResourceRoots: vscode.Uri[] = [];
+    if (!isProduction) {
+      localResourceRoots.push(vscode.Uri.parse('http://localhost:3000'));
+    } else {
+      localResourceRoots.push(vscode.Uri.file(path.join(context.extensionPath, 'out', 'dist')));
+      localResourceRoots.push(vscode.Uri.file(path.join(context.extensionPath, 'out', 'dist', 'assets')));
+    }
+
     // Open panel
     const panel = vscode.window.createWebviewPanel(
       `assignment-view-${assignment.id}`,
@@ -40,10 +49,12 @@ const handleOpenAssignmentView = (context: vscode.ExtensionContext) => {
       {
         enableScripts: true,
         // TODO: Add production path.
-        localResourceRoots: [vscode.Uri.parse('http://localhost:3000')],
+        localResourceRoots,
         retainContextWhenHidden: true,
       }
     );
+
+    let html;
 
     if (!isProduction) {
       const file = fs.readFileSync(path.resolve(__dirname, '../../../app/index.html'), { encoding: 'utf8' });
@@ -59,11 +70,22 @@ window.__vite_plugin_react_preamble_installed__ = true;
 <div id="root"></div>`;
 
       const withPreambleFix = withLocalhost.replace('<div id="root"></div>', preambleFix);
-
-      panel.webview.html = withPreambleFix;
+      html = withPreambleFix;
     } else {
-      // TODO: Anything in production?
+      const mainOnDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'out', 'dist', 'index.html'));
+      const file = fs.readFileSync(mainOnDiskPath.fsPath, 'utf8');
+      html = file;
+
+      const regex: RegExp = /(?:src|href)="(.+\.(?:js|css))"/g;
+      for (const [_, src] of html.matchAll(regex)) {
+        const parts = src.split('/');
+        const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'out', 'dist', ...parts));
+        const url = panel.webview.asWebviewUri(onDiskPath);
+        html = html.replace(src, url.toString());
+      }
     }
+
+    panel.webview.html = html;
 
     // Setup communication
     const assignmentService = new AssignmentService(filePath, assignment, panel.webview);
