@@ -4,7 +4,7 @@ import path from 'path';
 
 export default defineConfig({
   root: 'app',
-  base: 'http://localhost:3000',
+  base: '',
   plugins: [reactRefresh()],
   resolve: {
     alias: {
@@ -12,7 +12,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: '../dist',
+    outDir: '../out/dist',
   },
   server: {
     hmr: {
