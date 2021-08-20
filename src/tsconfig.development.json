@@ -13,7 +13,7 @@
     // "noUnusedParameters": true,  /* Report errors on unused parameters. */
   },
   "include": ["./**/*.ts", "../extension.development.ts"],
-  "exclude": ["node_modules", ".vscode-test"]
+  "exclude": ["node_modules", ".vscode-test", "app"]
 }
 
 
