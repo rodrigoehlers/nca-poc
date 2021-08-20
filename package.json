@@ -28,15 +28,16 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./src",
-    "watch": "tsc -watch -p ./src",
-    "pretest": "npm run compile && npm run lint",
+    "ext:build:dev": "tsc -p ./src/tsconfig.development.json",
+    "ext:build": "tsc -p ./src",
+    "ext:watch:dev": "tsc -watch -p ./src/tsconfig.development.json",
+    "ext:watch": "tsc -watch -p ./src",
+    "app:build": "tsc --noEmit -p ./app && vite build",
+    "app:watch": "vite",
+    "build": "npm run ext:build && npm run app:build",
+    "compile": "npm run build && vsce package",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js",
-    "dev": "vite",
-    "build": "tsc --noEmit -p ./app && vite build",
-    "serve": "vite preview"
+    "test": "node ./out/test/runTest.js"
   },
   "dependencies": {
     "react": "^17.0.2",
