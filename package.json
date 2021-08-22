@@ -28,10 +28,13 @@
     ]
   },
   "scripts": {
-    "ext:build:dev": "tsc -p ./src/tsconfig.development.json",
+    "ext:build:dev": "tsc -p ./src/tsconfig.development.json && npm run ext:dev",
     "ext:build": "tsc -p ./src",
     "ext:watch:dev": "tsc -watch -p ./src/tsconfig.development.json",
     "ext:watch": "tsc -watch -p ./src",
+    "ext:dev:mv": "find out -name '*development*' -exec bash -c ' mv $0 ${0/\\development./}' {} \\;",
+    "ext:dev:rm": "sed -i '' -e '$s/\\.development//' ./out/extension.js && sed -i '' -e '$s/\\.development//g' ./out/extension.js.map",
+    "ext:dev": "npm run ext:dev:mv && npm run ext:dev:rm",
     "app:build": "tsc --noEmit -p ./app && vite build",
     "app:watch": "vite",
     "build": "npm run ext:build && npm run app:build",
