@@ -26,9 +26,15 @@ There are a few `npm` scripts in `package.json` that are relevant for developmen
 2. `ext:dev:watch`: Calls `ext:dev` on file changes inside of the `out` matching only files with `.development` in their file name. `ext:dev` runs two scripts
     1. `ext:dev:mv`: Moves (renames) `extension.development.js` and `extension.development.js.map` to `extension.js` and `extension.js.map` respectively.
     2. `ext:dev:rm`: Removes `.development` from the last line of the file content of both `extension.js` and `extension.js.map`.
-3. `app:watch`: Runs the UI bundler [Vite](https://vitejs.dev).
+3. `app:watch`: Runs the UI bundler [Vite](https://vitejs.dev) and its development server with HMR and ES Modules support.
 
 Instead of running all three tasks by hand, it is also possible to run them as preLaunchTasks for a Visual Studio Code run configuration. However, this requires using Visual Studio code for development.
+
+## Compiling a Production Version
+
+Compiling a production version boils down to running yet another `npm` script. `npm run compile` does the following:
+1. `build`: Builds both, the app part and the extension part of the source code by running `app:build` and `ext:build`.
+2. `vsce package`: This command packages the compiled folder into a `.vsix` file which is the common file format of Visual Studio Code Extensions.
 
 ## Release Notes
 
