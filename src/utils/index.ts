@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 
-export const handleGetTextFromActiveEditor = (): [path: string, content: string] => {
+export const handleGetTextFromActiveEditor = (): [fileName: string, path: string, content: string] => {
   const { activeTextEditor } = vscode.window;
 
   if (!activeTextEditor) {
@@ -8,6 +8,6 @@ export const handleGetTextFromActiveEditor = (): [path: string, content: string]
   } else {
     const { document } = activeTextEditor;
     const uri = document.uri;
-    return [uri.path, document.getText()];
+    return [document.fileName, uri.path, document.getText()];
   }
 };

@@ -19,6 +19,21 @@ class AssignmentService implements MessageHandler {
     this.handleMessage = this.handleMessage.bind(this);
   }
 
+  /**
+   * Returns whether a file name matches the assignment file file name specification.
+   *
+   * @param fileName File name to test.
+   * @returns Whether the file name matched the specification
+   */
+  static isAssignmentFileByFileName(fileName: string) {
+    return fileName.endsWith('.assignment.json');
+  }
+
+  /**
+   * Returns a response file path based on the current assignment file path.
+   *
+   * @returns Response file path.
+   */
   getResponsePath() {
     const parts = this.path.split('/');
     const fileName = parts.pop();
@@ -27,6 +42,11 @@ class AssignmentService implements MessageHandler {
     return nextPath;
   }
 
+  /**
+   * Message handler for communication with the UI.
+   *
+   * @param message Incoming message.
+   */
   async handleMessage(message: LinkMessage) {
     const { type, payload } = message;
     switch (type) {

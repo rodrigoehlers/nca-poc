@@ -8,7 +8,7 @@ import UserInterfaceService from '../service/UserInterfaceService';
 
 const handleOpenAssignmentView = (context: vscode.ExtensionContext) => {
   // Get and parse content
-  let data: [path: string, content: string];
+  let data: [fileName: string, path: string, content: string];
   try {
     data = handleGetTextFromActiveEditor();
   } catch (error) {
@@ -16,7 +16,13 @@ const handleOpenAssignmentView = (context: vscode.ExtensionContext) => {
     return;
   }
 
-  const [filePath, content] = data;
+  const [fileName, filePath, content] = data;
+
+  // Validate assignment file name.
+  if (!AssignmentService.isAssignmentFileByFileName(fileName)) {
+    vscode.window.showErrorMessage(`Invalid assignment file name. Should end with '.assignment.json'.`);
+    return;
+  }
 
   // Parse assignment
   let assignment: NCA.Assignment;
