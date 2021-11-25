@@ -35,9 +35,3 @@ Instead of running all three tasks by hand, it is also possible to run them as p
 Compiling a production version boils down to running yet another `npm` script. `npm run compile` does the following:
 1. `build`: Builds both, the app part and the extension part of the source code by running `app:build` and `ext:build`.
 2. `vsce package`: This command packages the compiled folder into a `.vsix` file which is the common file format of Visual Studio Code Extensions.
-
-## Release Notes
-
-### 1.0.0
-
-Work in progress.
